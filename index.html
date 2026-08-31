@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>প্রযুক্তির দর্পণ | বাংলায় প্রযুক্তির ভবিষ্যৎ</title>
+<meta name="description" content="কৃত্রিম বুদ্ধিমত্তা, গ্যাজেট, প্রোগ্রামিং ও সাইবার নিরাপত্তা নিয়ে বাংলা ভাষায় গভীর বিশ্লেষণ।"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════════════
+   RESET & ROOT
+   ══════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a0f1d;--abyss:#050810;--cyan:#00f3ff;--violet:#7b2cbf;
+  --magenta:#ff4d9d;--mint:#14f195;
+  --glass-bg:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  --glass-border:rgba(255,255,255,.1);
+  --glass-shadow:0 8px 32px rgba(2,6,20,.55),inset 0 1px 0 rgba(255,255,255,.08);
+  --glow-cyan:0 0 40px -8px rgba(0,243,255,.45);
+  --font-bn:'Hind Siliguri','Noto Sans Bengali',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(0,243,255,.35) transparent}
+body{font-family:var(--font-bn);background:var(--navy);color:rgba(233,241,255,.92);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.7}
+::selection{background:rgba(0,243,255,.28);color:#fff}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{border:none;cursor:pointer;font-family:inherit;background:none;color:inherit}
+input,textarea{font-family:inherit}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--cyan),var(--violet));border-radius:99px}
+
+/* ══════════════════════════════════════════════════
+   UTILITIES
+   ══════════════════════════════════════════════════ */
+.glass{background:var(--glass-bg);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow)}
+.glass-strong{background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.04));backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border:1px solid rgba(255,255,255,.16);box-shadow:0 16px 48px rgba(2,6,20,.6),inset 0 1px 0 rgba(255,255,255,.12)}
+.text-gradient{background:linear-gradient(105deg,#00f3ff 0%,#8be9ff 35%,#b478ff 75%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.neon-glow{text-shadow:0 0 14px rgba(0,243,255,.55),0 0 36px rgba(123,44,191,.45)}
+.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.line-clamp-3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ══════════════════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════════════════ */
+@keyframes blobA{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(9vw,6vh,0) scale(1.18)}66%{transform:translate3d(-7vw,10vh,0) scale(.9)}}
+@keyframes blobB{0%,100%{transform:translate3d(0,0,0) scale(1.05)}40%{transform:translate3d(-11vw,-8vh,0) scale(.85)}70%{transform:translate3d(6vw,9vh,0) scale(1.2)}}
+@keyframes blobC{0%,100%{transform:translate3d(0,0,0) scale(.95)}50%{transform:translate3d(8vw,-12vh,0) scale(1.25)}}
+@keyframes shimmer{0%{transform:translateX(-120%) skewX(-18deg)}100%{transform:translateX(220%) skewX(-18deg)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes pulseGlow{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.anim-blob-a{animation:blobA 22s ease-in-out infinite}
+.anim-blob-b{animation:blobB 27s ease-in-out infinite}
+.anim-blob-c{animation:blobC 19s ease-in-out infinite}
+.anim-marquee{animation:marquee 35s linear infinite}
+.anim-spin-slow{animation:spinSlow 16s linear infinite}
+.anim-float{animation:float 7s ease-in-out infinite}
+.anim-page-in{animation:pageIn .5s ease-out both}
+.shimmer-wrap{position:relative;overflow:hidden}
+.shimmer-wrap::after{content:'';position:absolute;inset:-8px -33% -8px -33%;width:33%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transform:translateX(-120%) skewX(-18deg);transition:none;pointer-events:none;opacity:0}
+.shimmer-wrap:hover::after{animation:shimmer 1s ease forwards;opacity:1}
+
+/* ══════════════════════════════════════════════════
+   BACKGROUND
+   ══════════════════════════════════════════════════ */
+#liquid-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--navy)}
+#liquid-bg .deep{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% -10%,#132043 0%,#0a0f1d 45%,#05080f 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(100px)}
+.blob-1{width:38rem;height:38rem;top:-10rem;left:-8rem;background:radial-gradient(circle at 30% 30%,rgba(0,243,255,.42),transparent 65%)}
+.blob-2{width:42rem;height:42rem;top:28%;right:-10rem;background:radial-gradient(circle at 60% 40%,rgba(123,44,191,.5),transparent 65%)}
+.blob-3{width:34rem;height:34rem;bottom:-18rem;left:22%;background:radial-gradient(circle at 50% 50%,rgba(255,77,157,.28),transparent 65%)}
+.blob-4{width:22rem;height:22rem;top:55%;left:8%;background:radial-gradient(circle at 50% 50%,rgba(20,241,149,.18),transparent 65%)}
+#liquid-bg .grid-mesh{position:absolute;inset:0;opacity:.14;background-image:linear-gradient(rgba(255,255,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.14) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at center,#000 10%,transparent 75%);mask-image:radial-gradient(ellipse at center,#000 10%,transparent 75%)}
+#liquid-bg .vignette{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,transparent 35%,rgba(5,8,15,.75) 100%)}
+
+/* ══════════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════════ */
+#header{position:fixed;inset:0 0 auto 0;z-index:100;padding:12px 12px 0;display:flex;justify-content:center}
+.navbar{display:flex;align-items:center;gap:12px;width:100%;max-width:1200px;padding:12px 20px;border-radius:18px;transition:box-shadow .5s}
+.navbar.scrolled{box-shadow:0 8px 40px rgba(0,243,255,.12),var(--glass-shadow)}
+.logo-link{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer}
+.logo-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(0,243,255,.2),rgba(123,44,191,.3));border:1px solid rgba(255,255,255,.15)}
+.logo-icon svg{width:18px;height:18px;color:var(--cyan);transition:transform .5s}
+.logo-link:hover .logo-icon svg{transform:rotate(45deg)}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-bn{font-size:1.1rem;font-weight:700;letter-spacing:-.02em}
+.logo-en{font-size:9px;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.4);display:none}
+@media(min-width:640px){.logo-en{display:block}}
+.nav-links{display:none;align-items:center;gap:4px;margin-left:16px}
+@media(min-width:1024px){.nav-links{display:flex}}
+.nav-links a{padding:8px 16px;border-radius:9999px;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.6);transition:all .3s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,.1);color:#fff}
+.search-box{display:none;align-items:center;gap:8px;border-radius:9999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);padding:6px 14px;margin-left:auto;transition:all .4s;width:200px}
+.search-box:focus-within{width:280px;border-color:rgba(0,243,255,.45);box-shadow:0 0 0 3px rgba(0,243,255,.12)}
+@media(min-width:768px){.search-box{display:flex}}
+.search-box svg{width:16px;height:16px;flex-shrink:0;color:rgba(0,243,255,.7)}
+.search-box input{background:transparent;border:none;outline:none;width:100%;font-size:.875rem;color:#fff}
+.search-box input::placeholder{color:rgba(255,255,255,.35)}
+.mobile-toggle{display:flex;width:40px;height:40px;align-items:center;justify-content:center;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;margin-left:auto;transition:background .3s}
+.mobile-toggle:hover{background:rgba(255,255,255,.1)}
+@media(min-width:1024px){.mobile-toggle{display:none}}
+.mobile-toggle svg{width:20px;height:20px}
+#mobile-menu{display:none;position:absolute;left:12px;right:12px;top:72px;border-radius:18px;padding:16px;z-index:90}
+#mobile-menu.open{display:block}
+#mobile-menu .m-search{display:flex;align-items:center;gap:8px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);padding:10px 14px;margin-bottom:12px}
+#mobile-menu .m-search input{background:transparent;border:none;outline:none;width:100%;font-size:.875rem;color:#fff}
+#mobile-menu .m-search input::placeholder{color:rgba(255,255,255,.35)}
+#mobile-menu .m-search svg{width:16px;height:16px;flex-shrink:0;color:rgba(0,243,255,.7)}
+#mobile-menu nav{display:flex;flex-direction:column;gap:2px}
+#mobile-menu nav a{display:block;padding:10px 16px;border-radius:12px;font-size:.875rem;color:rgba(255,255,255,.75);transition:all .3s;cursor:pointer}
+#mobile-menu nav a:hover{background:rgba(255,255,255,.1);color:var(--cyan)}
+
+/* ══════════════════════════════════════════════════
+   PAGE CONTAINER
+   ══════════════════════════════════════════════════ */
+#app{min-height:100vh}
+
+/* ══════════════════════════════════════════════════
+   HERO (home)
+   ══════════════════════════════════════════════════ */
+.hero{position:relative;overflow:hidden;padding:160px 16px 60px;display:flex;align-items:center;justify-content:center;min-height:90vh}
+@media(min-width:640px){.hero{padding-top:180px}}
+.hero-inner{max-width:1200px;width:100%;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border-radius:9999px;padding:6px 18px;font-size:.8rem;font-weight:500;color:var(--cyan);border:1px solid rgba(0,243,255,.3);background:rgba(0,243,255,.1)}
+.hero-badge .dot{position:relative;width:8px;height:8px}
+.hero-badge .dot span{position:absolute;inset:0;border-radius:50%;background:var(--cyan)}
+.hero-badge .dot span:first-child{animation:pulseGlow 2s ease-in-out infinite;opacity:.7}
+.hero h1{margin-top:24px;font-size:2.5rem;font-weight:800;line-height:1.12;letter-spacing:-.02em}
+@media(min-width:640px){.hero h1{font-size:3.5rem}}
+@media(min-width:768px){.hero h1{font-size:4.2rem}}
+.hero p.sub{margin-top:20px;max-width:640px;margin-inline:auto;font-size:1rem;color:rgba(255,255,255,.6);line-height:1.8}
+@media(min-width:640px){.hero p.sub{font-size:1.1rem}}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:32px}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:9999px;background:linear-gradient(135deg,var(--cyan),var(--violet));color:var(--navy);font-weight:700;font-size:.9rem;box-shadow:0 0 30px rgba(0,243,255,.35);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;cursor:pointer}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 0 50px rgba(0,243,255,.5)}
+.btn-primary svg{width:16px;height:16px;transition:transform .3s}
+.btn-primary:hover svg.arrow{transform:translateX(3px)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:9999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);font-weight:600;font-size:.9rem;color:rgba(255,255,255,.85);backdrop-filter:blur(12px);transition:all .3s;cursor:pointer}
+.btn-secondary:hover{background:rgba(255,255,255,.12);color:#fff}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:460px;margin:48px auto 0}
+.stat-card{text-align:center;border-radius:18px;padding:14px 10px}
+.stat-card dt{font-size:.65rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em}
+.stat-card dd{font-size:1.4rem;font-weight:700;margin-top:4px}
+
+/* featured card */
+.featured-wrap{margin-top:56px;position:relative}
+.featured-glow{position:absolute;inset:-24px;border-radius:3rem;z-index:-1;background:conic-gradient(from 180deg,rgba(0,243,255,.18),rgba(123,44,191,.25),rgba(255,77,157,.16),rgba(0,243,255,.18));filter:blur(40px)}
+.featured-card{display:flex;flex-direction:column;border-radius:2rem;overflow:hidden;text-align:left;transition:transform .5s,box-shadow .5s;cursor:pointer}
+.featured-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,243,255,.15)}
+@media(min-width:640px){.featured-card{flex-direction:row}}
+.featured-img{position:relative;height:240px;overflow:hidden}
+@media(min-width:640px){.featured-img{width:42%;height:auto;min-height:280px}}
+.featured-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.featured-card:hover .featured-img img{transform:scale(1.08)}
+.featured-img .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,29,.7),transparent)}
+@media(min-width:640px){.featured-img .overlay{background:linear-gradient(to right,rgba(10,15,29,.7),transparent)}}
+.featured-img .badge{position:absolute;left:14px;top:14px;border-radius:9999px;padding:5px 14px;font-size:.72rem;font-weight:700;color:var(--navy);background:var(--cyan)}
+.featured-body{flex:1;padding:24px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+@media(min-width:640px){.featured-body{padding:32px}}
+.featured-body .cat{display:inline-block;width:fit-content;padding:4px 14px;border-radius:9999px;font-size:.72rem;font-weight:600;color:rgba(180,160,255,.9);border:1px solid rgba(123,44,191,.3);background:rgba(123,44,191,.12)}
+.featured-body h2{font-size:1.35rem;font-weight:700;line-height:1.35;color:#fff}
+@media(min-width:640px){.featured-body h2{font-size:1.6rem}}
+.featured-body .desc{font-size:.88rem;color:rgba(255,255,255,.55)}
+.meta-row{display:flex;flex-wrap:wrap;gap:16px;font-size:.75rem;color:rgba(255,255,255,.45);align-items:center}
+.meta-row span{display:flex;align-items:center;gap:4px}
+.meta-row svg{width:14px;height:14px}
+
+/* trending bar */
+.trending-bar{margin-top:40px;border-radius:18px;padding:12px 16px;display:flex;align-items:center;gap:16px;overflow:hidden}
+.trending-badge{flex-shrink:0;display:flex;align-items:center;gap:6px;border-radius:9999px;padding:5px 14px;font-size:.72rem;font-weight:700;color:var(--magenta);background:rgba(255,77,157,.15);border:1px solid rgba(255,77,157,.3)}
+.trending-badge svg{width:14px;height:14px}
+.marquee-wrap{flex:1;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.marquee-track{display:flex;gap:32px;width:max-content}
+.marquee-track:hover{animation-play-state:paused}
+.marquee-track a{white-space:nowrap;font-size:.88rem;color:rgba(255,255,255,.6);transition:color .3s;cursor:pointer}
+.marquee-track a:hover{color:var(--cyan)}
+
+/* ══════════════════════════════════════════════════
+   CONTENT GRID (feed + sidebar)
+   ══════════════════════════════════════════════════ */
+.content-grid{max-width:1200px;margin:0 auto;padding:0 16px 40px;display:grid;grid-template-columns:1fr;gap:40px}
+@media(min-width:1024px){.content-grid{grid-template-columns:1fr 340px}}
+
+/* Sort & Filter */
+.feed-header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px}
+.feed-title-wrap{display:flex;align-items:center;gap:12px}
+.feed-title-wrap .icon-wrap{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(0,243,255,.25),rgba(123,44,191,.35));border:1px solid rgba(255,255,255,.15)}
+.feed-title-wrap .icon-wrap svg{width:20px;height:20px;color:var(--cyan)}
+.feed-title-wrap h2{font-size:1.5rem;font-weight:700;color:#fff}
+.sort-pills{display:flex;border-radius:9999px;padding:4px;gap:4px}
+.sort-pill{padding:7px 16px;border-radius:9999px;font-size:.75rem;font-weight:600;color:rgba(255,255,255,.6);transition:all .3s;cursor:pointer}
+.sort-pill:hover{color:#fff}
+.sort-pill.active{color:var(--navy);background:linear-gradient(135deg,var(--cyan),var(--violet))}
+.filter-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chip{padding:8px 18px;border-radius:9999px;font-size:.78rem;font-weight:500;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);transition:all .3s;cursor:pointer}
+.chip:hover{border-color:rgba(255,255,255,.25);color:#fff}
+.chip.active{border-color:transparent;color:#fff;background:linear-gradient(120deg,var(--cyan),var(--violet));box-shadow:var(--glow-cyan)}
+
+/* Post Grid */
+.post-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:640px){.post-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1280px){.post-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* Post Card */
+.post-card{border-radius:1.5rem;overflow:hidden;display:flex;flex-direction:column;transition:transform .5s,box-shadow .5s;cursor:pointer}
+.post-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,243,255,.15)}
+.card-img{position:relative;height:200px;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.post-card:hover .card-img img{transform:scale(1.1)}
+.card-img .img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,29,.85),rgba(10,15,29,.1),transparent)}
+.card-img .cat-badge{position:absolute;left:12px;top:12px;padding:4px 12px;border-radius:9999px;font-size:.68rem;font-weight:600;color:var(--cyan);border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.4);backdrop-filter:blur(12px);cursor:pointer}
+.card-img .cat-badge:hover{color:#fff;background:rgba(0,243,255,.25)}
+.card-img .trending-tag{position:absolute;right:12px;top:12px;display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:9999px;font-size:.68rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#f97316,#ec4899)}
+.card-img .trending-tag svg{width:12px;height:12px}
+.card-body{flex:1;display:flex;flex-direction:column;gap:10px;padding:20px}
+.card-body h3{font-size:1.08rem;font-weight:700;line-height:1.4;color:#fff;transition:color .3s}
+.post-card:hover .card-body h3{color:var(--cyan)}
+.card-body .excerpt{font-size:.84rem;color:rgba(255,255,255,.5);flex:1}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px}
+.card-tags span{font-size:.68rem;padding:3px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);cursor:pointer;transition:all .3s}
+.card-tags span:hover{border-color:rgba(0,243,255,.4);color:var(--cyan)}
+.card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding-top:14px;font-size:.75rem;color:rgba(255,255,255,.45)}
+.card-footer .left{display:flex;align-items:center;gap:8px}
+.card-footer .avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,rgba(0,243,255,.35),rgba(123,44,191,.45));font-size:.7rem;font-weight:700;color:#fff;border:1px solid rgba(255,255,255,.2)}
+.card-footer .right{display:flex;align-items:center;gap:12px}
+.card-footer svg{width:14px;height:14px}
+.read-more{display:flex;align-items:center;gap:4px;font-size:.75rem;font-weight:600;color:rgba(255,255,255,.45);margin-top:6px;transition:color .3s}
+.post-card:hover .read-more{color:var(--cyan)}
+.read-more svg{width:14px;height:14px;transition:transform .3s;opacity:0}
+.post-card:hover .read-more svg{opacity:1;transform:translateX(3px)}
+
+/* Load more */
+.load-more-wrap{text-align:center;margin-top:36px}
+.btn-load-more{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:9999px;font-size:.88rem;font-weight:600;color:rgba(255,255,255,.85);transition:all .3s;cursor:pointer}
+.btn-load-more:hover{color:#fff;box-shadow:var(--glow-cyan)}
+.btn-load-more .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:var(--glow-cyan)}
+
+/* Empty */
+.empty-state{text-align:center;padding:64px 24px;border-radius:1.5rem;grid-column:1/-1}
+.empty-state svg{width:48px;height:48px;color:rgba(255,255,255,.3);margin:0 auto 16px}
+.empty-state h3{font-size:1.1rem;font-weight:600;color:rgba(255,255,255,.7)}
+.empty-state p{font-size:.88rem;color:rgba(255,255,255,.45);max-width:360px;margin:8px auto 0}
+
+/* ══════════════════════════════════════════════════
+   SIDEBAR
+   ══════════════════════════════════════════════════ */
+.sidebar{display:flex;flex-direction:column;gap:20px}
+@media(min-width:1024px){.sidebar{position:sticky;top:100px;align-self:start}}
+.sidebar-section{border-radius:1.5rem;padding:24px}
+.sec-title{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.sec-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.15)}
+.sec-title h3{font-size:1rem;font-weight:700;color:#fff}
+.trending-list{display:flex;flex-direction:column;gap:4px}
+.trending-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:16px;transition:background .3s;cursor:pointer}
+.trending-item:hover{background:rgba(255,255,255,.06)}
+.trending-item .rank{font-size:1.6rem;font-weight:900;width:24px;flex-shrink:0;opacity:.7}
+.trending-item .t-info{flex:1;min-width:0}
+.trending-item .t-title{font-size:.84rem;font-weight:600;color:rgba(255,255,255,.8);transition:color .3s}
+.trending-item:hover .t-title{color:var(--cyan)}
+.trending-item .t-meta{font-size:.7rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:4px;margin-top:4px}
+.trending-item .t-meta svg{width:12px;height:12px}
+
+.cat-filter-grid{display:flex;flex-direction:column;gap:6px}
+.cat-btn{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);transition:all .3s;text-align:left;cursor:pointer}
+.cat-btn:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
+.cat-btn.active{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.1)}
+.cat-btn .cf-left{display:flex;align-items:center;gap:10px}
+.cat-btn .cf-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.15);transition:transform .3s}
+.cat-btn:hover .cf-icon{transform:scale(1.1)}
+.cat-btn .cf-icon svg{width:16px;height:16px}
+.cat-btn .cf-name{font-size:.88rem;color:rgba(255,255,255,.75);transition:color .3s}
+.cat-btn:hover .cf-name{color:#fff}
+.cat-btn .cf-count{padding:2px 10px;border-radius:9999px;background:rgba(255,255,255,.06);font-size:.7rem;color:rgba(255,255,255,.5)}
+
+.newsletter-glow{position:absolute;right:-40px;top:-40px;width:130px;height:130px;border-radius:50%;background:rgba(123,44,191,.3);filter:blur(60px);pointer-events:none}
+.nl-form{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.nl-form input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-size:.88rem;color:#fff;transition:all .3s;outline:none}
+.nl-form input::placeholder{color:rgba(255,255,255,.35)}
+.nl-form input:focus{border-color:rgba(0,243,255,.5);box-shadow:0 0 0 3px rgba(0,243,255,.12)}
+.nl-form button{padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--violet));font-size:.88rem;font-weight:700;color:var(--navy);display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .3s;cursor:pointer}
+.nl-form button:hover{transform:scale(1.02)}
+.nl-form button svg{width:16px;height:16px}
+.nl-msg{margin-top:10px;font-size:.78rem;display:flex;align-items:center;gap:6px;color:var(--mint)}
+
+/* ══════════════════════════════════════════════════
+   ARTICLE PAGE
+   ══════════════════════════════════════════════════ */
+.article-page{max-width:860px;margin:0 auto;padding:120px 16px 40px}
+@media(min-width:640px){.article-page{padding-top:140px}}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;color:rgba(255,255,255,.5);margin-bottom:24px;transition:color .3s;cursor:pointer}
+.back-link:hover{color:var(--cyan)}
+.back-link svg{width:16px;height:16px}
+.article-page .cat{display:inline-block;padding:4px 14px;border-radius:9999px;font-size:.72rem;font-weight:600;color:rgba(180,160,255,.9);border:1px solid rgba(123,44,191,.3);background:rgba(123,44,191,.12);margin-bottom:16px;cursor:pointer;transition:background .3s}
+.article-page .cat:hover{background:rgba(123,44,191,.25)}
+.article-page h1{font-size:1.8rem;font-weight:800;line-height:1.3;color:#fff;margin-bottom:12px}
+@media(min-width:640px){.article-page h1{font-size:2.4rem}}
+.article-page .a-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.article-page .a-meta span{display:flex;align-items:center;gap:5px}
+.article-page .a-meta svg{width:14px;height:14px}
+.article-page .cover{width:100%;height:300px;border-radius:1.5rem;overflow:hidden;margin-bottom:28px;position:relative}
+@media(min-width:640px){.article-page .cover{height:400px}}
+.article-page .cover img{width:100%;height:100%;object-fit:cover}
+.article-page .cover .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,29,.5),transparent)}
+.article-body{border-radius:2rem;padding:28px;font-size:1rem;line-height:2;color:rgba(226,236,255,.82)}
+@media(min-width:640px){.article-body{padding:40px}}
+.article-body p{margin-bottom:1rem}
+.article-body h2{margin:2rem 0 1rem;font-size:1.3rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+.article-body h2::before{content:'';width:4px;height:24px;border-radius:99px;flex-shrink:0;background:linear-gradient(180deg,var(--cyan),var(--violet));box-shadow:var(--glow-cyan)}
+.article-body ul{margin:0 0 1.2rem;display:grid;gap:8px;list-style:none}
+.article-body li{position:relative;padding-left:24px;line-height:1.9}
+.article-body li::before{content:'';position:absolute;left:2px;top:12px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));box-shadow:0 0 12px rgba(0,243,255,.7)}
+.article-body blockquote{border-left:2px solid rgba(0,243,255,.7);padding:20px 24px;margin:24px 0;border-radius:16px;font-style:italic;font-weight:500;color:rgba(255,255,255,.85);font-size:1.02rem}
+.article-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+.article-tags span{padding:5px 14px;border-radius:10px;font-size:.78rem;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);cursor:pointer;transition:all .3s}
+.article-tags span:hover{border-color:rgba(0,243,255,.4);color:var(--cyan)}
+.related-section{margin-top:48px}
+.related-section h2{font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:20px}
+.related-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.related-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.related-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ══════════════════════════════════════════════════
+   CATEGORY PAGE
+   ══════════════════════════════════════════════════ */
+.cat-page{max-width:1200px;margin:0 auto;padding:120px 16px 40px}
+@media(min-width:640px){.cat-page{padding-top:140px}}
+.cat-page-header{border-radius:2rem;padding:32px;margin-bottom:32px;position:relative;overflow:hidden}
+.cat-page-header .glow1{position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;filter:blur(80px);pointer-events:none}
+.cat-page-header .glow2{position:absolute;left:-20px;bottom:-60px;width:160px;height:160px;border-radius:50%;filter:blur(70px);pointer-events:none}
+.cat-page-header h1{font-size:2rem;font-weight:800;color:#fff;position:relative}
+@media(min-width:640px){.cat-page-header h1{font-size:2.5rem}}
+.cat-page-header p{font-size:.88rem;color:rgba(255,255,255,.5);margin-top:8px;position:relative}
+
+/* ══════════════════════════════════════════════════
+   ABOUT PAGE
+   ══════════════════════════════════════════════════ */
+.about-page{max-width:860px;margin:0 auto;padding:120px 16px 40px}
+@media(min-width:640px){.about-page{padding-top:140px}}
+.about-page h1{font-size:2rem;font-weight:800;color:#fff;margin-bottom:16px}
+@media(min-width:640px){.about-page h1{font-size:2.6rem}}
+.about-page p{font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.9;margin-bottom:16px}
+.about-page h2{font-size:1.3rem;font-weight:700;color:#fff;margin:32px 0 12px}
+.values-grid{display:grid;gap:16px;margin:24px 0;grid-template-columns:1fr}
+@media(min-width:640px){.values-grid{grid-template-columns:repeat(3,1fr)}}
+.value-card{border-radius:1.5rem;padding:24px}
+.value-card h3{font-size:1rem;font-weight:700;color:#fff;margin:12px 0 8px}
+.value-card p{font-size:.84rem;color:rgba(255,255,255,.55);line-height:1.7}
+.value-icon{width:44px;height:44px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(0,243,255,.25),rgba(123,44,191,.35));border:1px solid rgba(255,255,255,.15)}
+.value-icon svg{width:20px;height:20px;color:var(--cyan)}
+
+/* ══════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════ */
+#site-footer{margin-top:80px;padding:0 16px 32px}
+.footer-inner{max-width:1200px;margin:0 auto;border-radius:2rem;padding:40px;overflow:hidden;position:relative}
+@media(min-width:640px){.footer-inner{padding:48px}}
+.footer-top-line{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,243,255,.6),transparent)}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:40px}
+@media(min-width:768px){.footer-grid{grid-template-columns:1.4fr 1fr 1fr}}
+.footer-brand p{margin-top:16px;font-size:.88rem;color:rgba(255,255,255,.5);max-width:320px;line-height:1.7}
+.footer-socials{display:flex;gap:8px;margin-top:20px}
+.social-btn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);transition:all .3s}
+.social-btn:hover{transform:translateY(-3px);border-color:rgba(0,243,255,.4);color:var(--cyan);box-shadow:var(--glow-cyan)}
+.social-btn svg{width:16px;height:16px}
+.footer-links h4{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:16px}
+.footer-links ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links li a{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;color:rgba(255,255,255,.5);transition:color .3s;cursor:pointer}
+.footer-links li a:hover{color:var(--cyan)}
+.footer-links li a .bullet{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s;flex-shrink:0}
+.footer-links li a:hover .bullet{width:12px;background:var(--cyan)}
+.footer-bottom{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:24px;margin-top:40px;font-size:.75rem;color:rgba(255,255,255,.4)}
+@media(min-width:640px){.footer-bottom{flex-direction:row}}
+
+/* Back to top */
+#back-to-top{display:none;position:fixed;bottom:24px;right:24px;z-index:80;width:48px;height:48px;border-radius:16px;place-items:center;color:var(--cyan);box-shadow:var(--glow-cyan);transition:transform .3s;cursor:pointer}
+#back-to-top:hover{transform:scale(1.1)}
+#back-to-top.visible{display:grid}
+#back-to-top svg{width:20px;height:20px}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div id="liquid-bg">
+  <div class="deep"></div>
+  <div class="blob blob-1 anim-blob-a"></div>
+  <div class="blob blob-2 anim-blob-b"></div>
+  <div class="blob blob-3 anim-blob-c"></div>
+  <div class="blob blob-4 anim-blob-a"></div>
+  <div class="grid-mesh"></div>
+  <div class="vignette"></div>
+</div>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="navbar glass" id="navbar">
+    <a class="logo-link" onclick="R.go('')">
+      <span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 3.2 3.5.5-2.5 2.4.6 3.4L12 11l-3.1 1.5.6-3.4L7 6.7l3.5-.5L12 3z"/><path d="M5 20l2-5M19 20l-2-5M12 16v4"/></svg></span>
+      <span class="logo-text"><span class="logo-bn text-gradient neon-glow">প্রযুক্তির দর্পণ</span><span class="logo-en">Projuktir Dorpon</span></span>
+    </a>
+    <div class="nav-links" id="nav-links"></div>
+    <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="search-input" placeholder="খুঁজুন…" aria-label="সার্চ"/></div>
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="মেনু"><svg id="menu-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg><svg id="menu-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div id="mobile-menu" class="glass-strong">
+    <div class="m-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="m-search-input" placeholder="খুঁজুন…"/></div>
+    <nav id="mobile-nav"></nav>
+  </div>
+</div>
+
+<!-- APP (router renders here) -->
+<div id="app"></div>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="footer-inner glass">
+    <div class="footer-top-line"></div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo-link" onclick="R.go('')" style="margin-bottom:0">
+          <span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 3.2 3.5.5-2.5 2.4.6 3.4L12 11l-3.1 1.5.6-3.4L7 6.7l3.5-.5L12 3z"/><path d="M5 20l2-5M19 20l-2-5M12 16v4"/></svg></span>
+          <span class="text-gradient neon-glow" style="font-size:1.15rem;font-weight:700">প্রযুক্তির দর্পণ</span>
+        </a>
+        <p>বাংলা ভাষায় প্রযুক্তির গভীর বিশ্লেষণ, রিভিউ ও ভবিষ্যৎ ভাবনা। প্রতিদিন নতুন কিছু জানুন।</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.87.24-1.46 1.49-1.46H16.5V4.34A19 19 0 0 0 14.4 4.24c-2.09 0-3.52 1.28-3.52 3.62V10.5H8.5v3H10.9V21h2.6z"/></svg></a>
+          <a class="social-btn" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 3H21l-6.53 7.46L22 21h-6.19l-4.85-6.34L5.4 21H2.6l7-8L2 3h6.34l4.38 5.8L18.24 3zm-1.09 16.2h1.53L7.03 4.7H5.38l11.77 14.5z"/></svg></a>
+          <a class="social-btn" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12s0-3.2-.4-4.7c-.24-.86-.9-1.53-1.76-1.77C18.34 5 12 5 12 5s-6.34 0-7.84.53c-.86.24-1.52.9-1.76 1.77C2 8.8 2 12 2 12s0 3.2.4 4.7c.24.86.9 1.5 1.76 1.75C5.66 19 12 19 12 19s6.34 0 7.84-.55c.86-.24 1.52-.89 1.76-1.75.4-1.5.4-4.7.4-4.7zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+          <a class="social-btn" href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.19c0 4.49 2.87 8.3 6.84 9.64.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.61-3.37-1.2-3.37-1.2-.45-1.18-1.11-1.5-1.11-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.55 2.36 1.1 2.94.84.09-.66.35-1.1.63-1.35-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.19C22 6.58 17.52 2 12 2z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-links"><h4>দ্রুত লিংক</h4><ul id="footer-nav"></ul></div>
+      <div class="footer-links"><h4>বিভাগসমূহ</h4><ul id="footer-cats"></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="f-year"></span> প্রযুক্তির দর্পণ — সর্বস্বত্ব সংরক্ষিত।</p>
+      <p>Built with ❤️ &amp; Glassmorphism</p>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" class="glass-strong" aria-label="উপরে যান"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<script>
+(function(){
+"use strict";
+
+/* ══════════════ HELPERS ══════════════ */
+const BD="০১২৩৪৫৬৭৮৯".split("");
+const bn=v=>String(v).replace(/\d/g,d=>BD[+d]);
+const fv=n=>n>=1000?bn((n/1000).toFixed(n%1000===0?0:1))+" হাজার":bn(n);
+const BM=["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
+const fd=s=>{const d=new Date(s);return isNaN(d)?"":`${bn(d.getDate())} ${BM[d.getMonth()]}, ${bn(d.getFullYear())}`};
+const rt=s=>{const ms=Date.now()-new Date(s).getTime(),m=Math.floor(ms/60000);if(m<1)return"এইমাত্র";if(m<60)return bn(m)+" মিনিট আগে";const h=Math.floor(m/60);if(h<24)return bn(h)+" ঘণ্টা আগে";const d=Math.floor(h/24);return d<30?bn(d)+" দিন আগে":bn(Math.floor(d/30))+" মাস আগে"};
+const $=s=>document.querySelector(s);
+const IC={eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',zap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>',arrow:'<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',arrowUp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>',back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>',grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg>',flame:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14 0-5.5 3.5-7.5C14 5 16 6 17 8c.67 1.34.5 3-1 5-1.5 2-1.5 3 0 4.5"/></svg>',mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="m22 2-11 11"/></svg>',check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>',trend:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>',search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="m8 8 6 6"/></svg>'};
+const CI={brain:'<path d="M9.5 2a3 3 0 0 0-3 3 3 3 0 0 0-.5 5.7V12a5 5 0 0 0 5 5h2a5 5 0 0 0 5-5v-1.3A3 3 0 0 0 17.5 5a3 3 0 0 0-3-3z" fill="none" stroke="currentColor" stroke-width="2"/>',smartphone:'<rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18h.01" stroke="currentColor" stroke-width="2"/>',code:'<path d="m16 18 6-6-6-6M8 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="2"/>',rocket:'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" fill="none" stroke="currentColor" stroke-width="2"/>',orbit:'<circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)" fill="none" stroke="currentColor" stroke-width="1.5"/>'};
+const ci=k=>`<svg viewBox="0 0 24 24">${CI[k]||CI.brain}</svg>`;
+
+/* ══════════════ DATA ══════════════ */
+const CATS=[
+  {slug:"ai",nameBn:"কৃত্রিম বুদ্ধিমত্তা",icon:"brain",from:"#00F3FF",to:"#7B2CBF",count:3},
+  {slug:"gadgets",nameBn:"গ্যাজেট রিভিউ",icon:"smartphone",from:"#7B2CBF",to:"#FF4D9D",count:5},
+  {slug:"programming",nameBn:"প্রোগ্রামিং",icon:"code",from:"#00F3FF",to:"#3B82F6",count:7},
+  {slug:"cyber-security",nameBn:"সাইবার নিরাপত্তা",icon:"shield",from:"#22D3EE",to:"#14F195",count:3},
+  {slug:"startup",nameBn:"স্টার্টআপ ও বাজার",icon:"rocket",from:"#FBBF24",to:"#F43F5E",count:3},
+  {slug:"science",nameBn:"মহাকাশ ও বিজ্ঞান",icon:"orbit",from:"#818CF8",to:"#00F3FF",count:3}
+];
+const IM=id=>`https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200`;
+const P=[
+  {id:1,slug:"jenerative-ai-bangladesh-2026",title:"জেনারেটিভ এআই ২০২৬: বাংলাদেশের প্রযুক্তি খাত কীভাবে বদলে যাচ্ছে",excerpt:"কৃত্রিম বুদ্ধিমত্তার নতুন ঢেউ শুধু সিলিকন ভ্যালিতে সীমাবদ্ধ নেই— ঢাকা, চট্টগ্রাম আর সিলেটের সফটওয়্যার ফার্মগুলোতেও শুরু হয়েছে নীরব বিপ্লব।",content:"জেনারেটিভ এআই এখন আর গবেষণাগারের পরীক্ষা নয়, এটি একটি অর্থনৈতিক শক্তি।\n\n## কেন এই পরিবর্তন গুরুত্বপূর্ণ\n\nদেশের বড় সফটওয়্যার প্রতিষ্ঠানগুলোর প্রায় ৬০% এআই কোপাইলট যুক্ত করেছে।\n\n- রিপিটেটিভ কোড লেখার সময় গড়ে ৩৫% কমেছে\n- QA টেস্ট কেস তৈরির খরচ নেমেছে অর্ধেকে\n- বাংলা কনটেন্ট প্রসেসিংয়ে দেশীয় মডেলের ব্যবহার বেড়েছে\n\n## বাংলা ভাষার মডেল কতদূর\n\nকয়েকটি বিশ্ববিদ্যালয়ের যৌথ প্রকল্পে বড় আকারের বাংলা করপাস তৈরি হয়েছে।\n\n> ভাষা প্রযুক্তিতে পিছিয়ে থাকা মানে ডিজিটাল অর্থনীতিতে পিছিয়ে থাকা।\n\n## চ্যালেঞ্জ কোথায়\n\nGPU ক্লাস্টারের খরচ, বিদ্যুতের নিশ্চয়তা এবং দক্ষ ML ইঞ্জিনিয়ারের ঘাটতি।",img:IM("30547574"),cat:"ai",author:"তানভীর হাসান",mins:8,views:18420,trend:true,feat:true,tags:["এআই","মেশিন লার্নিং","বাংলাদেশ"],days:1},
+  {id:2,slug:"neural-chip-mobile",title:"নিউরাল চিপের যুগ: স্মার্টফোনেই চলবে বড় ভাষা মডেল",excerpt:"অন-ডিভাইস AI প্রসেসিং এখন বাস্তব। নতুন প্রজন্মের NPU কীভাবে ক্লাউডনির্ভরতা কমিয়ে দিচ্ছে।",content:"স্মার্টফোনের চিপসেট এখন আর শুধু CPU আর GPU-এর গল্প নয়।\n\n## অন-ডিভাইস মানে কী লাভ\n\n- ভয়েস টাইপিং ৪০ms এর কম লেটেন্সিতে\n- জেনারেটিভ ফিল অফলাইনেই সম্ভব\n- ব্যাটারি খরচ ক্লাউড কলের তুলনায় কম\n\n> মেমোরি ব্যান্ডউইথই এখন আসল বটলনেক, কম্পিউট নয়।",img:IM("6727759"),cat:"gadgets",author:"সাদিয়া রহমান",mins:6,views:14260,trend:true,feat:false,tags:["চিপসেট","স্মার্টফোন","NPU"],days:2},
+  {id:3,slug:"nextjs-server-components",title:"Next.js ১৬ ও সার্ভার কম্পোনেন্ট: বাস্তব প্রজেক্টে যা শিখলাম",excerpt:"সার্ভার কম্পোনেন্ট, স্ট্রিমিং আর ক্যাশিং— তিনটি ধারণা বুঝলে পারফরম্যান্স বদলে যায়।",content:"React সার্ভার কম্পোনেন্ট নিয়ে বাস্তব অভিজ্ঞতা।\n\n## সার্ভার নাকি ক্লায়েন্ট\n\nডেটা আনা ও সিক্রেট সার্ভারে; ইন্টার‍্যাকশন ক্লায়েন্টে।\n\n## স্ট্রিমিং\n\n- ধীর ডেটা কলকে আলাদা Suspense-এ মুড়ে দিন\n- স্কেলেটন UI দিন, স্পিনার নয়\n- ক্রিটিক্যাল কনটেন্ট আগে রেন্ডার করুন\n\n> LCP প্রায় ৪০% উন্নত হয়েছে।",img:IM("34804017"),cat:"programming",author:"রাফিদ আহমেদ",mins:9,views:12890,trend:true,feat:false,tags:["Next.js","React","পারফরম্যান্স"],days:3},
+  {id:4,slug:"passkey-password-free",title:"পাসকি: পাসওয়ার্ডবিহীন ভবিষ্যৎ কি সত্যিই নিরাপদ?",excerpt:"ফিশিং প্রতিরোধে পাসকি এক ধাপ এগিয়ে, কিন্তু ডিভাইস হারালে কী হবে?",content:"পাসওয়ার্ড মনে রাখার দিন ফুরিয়ে আসছে।\n\n## সুবিধা\n\n- ফিশিং প্রায় অসম্ভব\n- ডেটা ব্রিচে পাসওয়ার্ড ফাঁস হওয়ার ঝুঁকি নেই\n- বায়োমেট্রিক দিয়ে দুই সেকেন্ডে লগইন\n\n> পাসকি নিরাপত্তা ও সুবিধার ভারসাম্য এনেছে।",img:IM("8386356"),cat:"cyber-security",author:"নুসরাত জাহান",mins:7,views:9840,trend:true,feat:false,tags:["নিরাপত্তা","পাসকি"],days:4},
+  {id:5,slug:"dhaka-startup-funding",title:"ঢাকার স্টার্টআপে বিনিয়োগের নতুন ঢেউ",excerpt:"বিনিয়োগকারীদের নজর এখন ডিপ-টেক ও বি-টু-বি সফটওয়্যারে।",content:"দেশীয় স্টার্টআপে বিনিয়োগের ধরন বদলেছে।\n\n## কোন খাতে আগ্রহ\n\n- সাপ্লাই চেইন অটোমেশন\n- এসএমই-দের এমবেডেড ফিন্যান্স\n- বাংলা ভাষাভিত্তিক AI টুল\n\n> গল্প দিয়ে সিড রাউন্ড হয়, সিরিজ-এ হয় স্প্রেডশিট দিয়ে।",img:IM("28494632"),cat:"startup",author:"ইমরান কবির",mins:6,views:7620,trend:false,feat:false,tags:["স্টার্টআপ","বিনিয়োগ"],days:5},
+  {id:6,slug:"quantum-computing-simple",title:"কোয়ান্টাম কম্পিউটিং সহজ ভাষায়: কিউবিট আসলে কী",excerpt:"সুপারপজিশন, এনট্যাঙ্গলমেন্ট— জটিল শব্দের সরল ধারণা।",content:"কোয়ান্টাম কম্পিউটার সম্পূর্ণ ভিন্ন নিয়মে চলে।\n\n## বিট বনাম কিউবিট\n\nসাধারণ বিট ০ বা ১। কিউবিট একই সঙ্গে দুটো অবস্থা ধারণ করে।\n\n- ত্রুটি সংশোধনে শত শত ফিজিক্যাল কিউবিট লাগে\n- বাণিজ্যিক ব্যবহার এখনো সীমিত",img:IM("30547612"),cat:"science",author:"ড. মেহজাবিন আলম",mins:10,views:8930,trend:false,feat:false,tags:["কোয়ান্টাম","বিজ্ঞান"],days:6},
+  {id:7,slug:"foldable-phone-2026",title:"ফোল্ডেবল ফোন ২০২৬: ভাঁজের দাগ কি মুছে গেল?",excerpt:"নতুন হিঞ্জ ডিজাইন আর আল্ট্রা-থিন গ্লাসে ফোল্ডেবল পরিণত।",content:"২০২৬ সালের ফোল্ডেবল দৈনন্দিন ব্যবহারের যন্ত্র।\n\n## কার জন্য\n\n- মাল্টিটাস্কার\n- ই-বুক পাঠক\n- কনটেন্ট ক্রিয়েটর",img:IM("18545013"),cat:"gadgets",author:"সাদিয়া রহমান",mins:5,views:11240,trend:true,feat:false,tags:["ফোল্ডেবল","মোবাইল"],days:7},
+  {id:8,slug:"typescript-clean-architecture",title:"টাইপস্ক্রিপ্টে ক্লিন আর্কিটেকচার",excerpt:"স্তরভিত্তিক কাঠামো আর নির্ভরতার দিক ঠিক রাখাই আসল কাজ।",content:"বড় কোডবেস সামলানোর কৌশল।\n\n## চারটি স্তর\n\n- এনটিটি: ব্যবসায়িক নিয়ম\n- ইউজ কেস: অ্যাপ লজিক\n- অ্যাডাপ্টার: কন্ট্রোলার\n- ফ্রেমওয়ার্ক: ডেটাবেস, UI",img:IM("693859"),cat:"programming",author:"রাফিদ আহমেদ",mins:8,views:6870,trend:false,feat:false,tags:["TypeScript","আর্কিটেকচার"],days:9},
+  {id:9,slug:"ai-agents-workflow",title:"এআই এজেন্ট: কাজ করে দেওয়ার সহকর্মী",excerpt:"টুল কলিং, মেমোরি আর প্ল্যানিং মিলে তৈরি হয় সত্যিকারের এজেন্ট।",content:"চ্যাটবট উত্তর দেয়, এজেন্ট কাজ সম্পন্ন করে।\n\n## তিন স্তম্ভ\n\n- টুল কলিং: API-তে সরাসরি কাজ\n- মেমোরি: আগের ফলাফল মনে রাখা\n- প্ল্যানিং: বড় কাজকে ছোট ধাপে ভাগ\n\n> স্বয়ংক্রিয়তা যত বাড়ে, ভুলের খরচও বাড়ে।",img:IM("8294630"),cat:"ai",author:"তানভীর হাসান",mins:7,views:15310,trend:true,feat:false,tags:["এআই এজেন্ট","অটোমেশন"],days:10},
+  {id:10,slug:"ransomware-defense",title:"র‍্যানসমওয়্যার থেকে ছোট ব্যবসা বাঁচানোর ৭টি ধাপ",excerpt:"সঠিক অগ্রাধিকারেই কার্যকর প্রতিরক্ষা সম্ভব।",content:"ছোট ব্যবসাই সহজ শিকার।\n\n## সাতটি অগ্রাধিকার\n\n- ৩-২-১ ব্যাকআপ নিয়ম\n- বহুস্তর প্রমাণীকরণ\n- নিয়মিত হালনাগাদ\n- ফিশিং প্রশিক্ষণ\n\n> ব্যাকআপ পরীক্ষা না করা মানে ব্যাকআপ না থাকা।",img:IM("30547571"),cat:"cyber-security",author:"নুসরাত জাহান",mins:6,views:5420,trend:false,feat:false,tags:["র‍্যানসমওয়্যার","নিরাপত্তা"],days:12},
+  {id:11,slug:"satellite-internet-bd",title:"স্যাটেলাইট ইন্টারনেট: প্রত্যন্ত অঞ্চলের সমাধান?",excerpt:"LEO স্যাটেলাইটে ব্রডব্যান্ড, কিন্তু খরচই প্রশ্ন।",content:"হাওর ও পাহাড়ে ফাইবার টানা ব্যয়বহুল।\n\n## LEO কেন আলাদা\n\n- ভূস্থির স্যাটেলাইট ৩৬,০০০ কিমি\n- LEO ৫৫০ কিমি\n- লেটেন্সি ২০-৪০ মিলিসেকেন্ড",img:IM("18545010"),cat:"science",author:"ড. মেহজাবিন আলম",mins:7,views:6110,trend:false,feat:false,tags:["স্যাটেলাইট","সংযোগ"],days:14},
+  {id:12,slug:"glassmorphism-ui",title:"লিকুইড গ্লাস UI: সৌন্দর্য আর ব্যবহারযোগ্যতার ভারসাম্য",excerpt:"কনট্রাস্ট ঠিক না থাকলে অ্যাক্সেসিবিলিটি ভেঙে পড়ে।",content:"গ্লাসমরফিজম আবার ফিরেছে।\n\n## মূল উপাদান\n\n- ব্যাকড্রপ ব্লার ১২-২০px\n- সাদা বর্ডার <১০% অস্বচ্ছতা\n- রঙিন গ্লো শ্যাডো\n\n> ভালো ডিজাইন চোখে পড়ে, পথ আটকায় না।",img:IM("6727761"),cat:"programming",author:"অর্পিতা সেন",mins:5,views:9210,trend:false,feat:false,tags:["UI","ডিজাইন","CSS"],days:16},
+  {id:13,slug:"robotics-manufacturing-bd",title:"কারখানায় রোবট: উৎপাদন খাতে অটোমেশন",excerpt:"কোবট এখন আর বিলাসিতা নয়।",content:"পোশাক ও ইলেকট্রনিক্সে অটোমেশন বাস্তব হচ্ছে।\n\n## কোথায় কার্যকর\n\n- প্যাকেজিং\n- গুণগত পরিদর্শন\n- ভারী উপকরণ স্থানান্তর",img:IM("8386487"),cat:"startup",author:"ইমরান কবির",mins:6,views:4380,trend:false,feat:false,tags:["রোবটিক্স","অটোমেশন"],days:18},
+  {id:14,slug:"smart-home-privacy",title:"স্মার্ট হোম: সুবিধার বিনিময়ে কতটা গোপনীয়তা?",excerpt:"প্রতিটি ডিভাইসই ডেটা সংগ্রহ করে।",content:"প্রতিটি IoT যন্ত্র সম্ভাব্য প্রবেশপথ।\n\n## সুরক্ষা\n\n- আলাদা নেটওয়ার্কে IoT রাখুন\n- ডিফল্ট পাসওয়ার্ড বদলান\n- লোকাল স্টোরেজ বেছে নিন",img:IM("8294792"),cat:"gadgets",author:"অর্পিতা সেন",mins:5,views:5290,trend:false,feat:false,tags:["স্মার্ট হোম","IoT"],days:21},
+  {id:15,slug:"rust-vs-go-2026",title:"Rust বনাম Go ২০২৬: ব্যাকএন্ডে কোনটা বেছে নেবেন?",excerpt:"পারফরম্যান্স চাইলে Rust, প্রোডাক্টিভিটি চাইলে Go — কিন্তু ২০২৬ সালে সমীকরণটা কি বদলে গেছে?",content:"ব্যাকএন্ড ডেভেলপমেন্টে Rust আর Go দুটোই জনপ্রিয়তার শীর্ষে।\n\n## Rust-এর শক্তি\n\n- জিরো-কস্ট অ্যাবস্ট্রাকশন\n- মেমোরি সেফটি কম্পাইল টাইমেই নিশ্চিত\n- WebAssembly সাপোর্ট অসাধারণ\n\n## Go-এর সুবিধা\n\n- শেখা সহজ, কোড পড়া সহজ\n- বিল্ট-ইন কনকারেন্সি (goroutine)\n- দ্রুত কম্পাইলেশন\n\n> ভাষা নির্বাচন প্রজেক্টের ধরন বোঝে, ব্যক্তিগত পছন্দ নয়।\n\n## কখন কোনটা\n\n- সিস্টেম প্রোগ্রামিং, এমবেডেড → Rust\n- মাইক্রোসার্ভিস, CLI টুল → Go\n- দুটোই চমৎকার, দলের দক্ষতাই মূল বিবেচ্য",img:IM("34804017"),cat:"programming",author:"রাফিদ আহমেদ",mins:8,views:8450,trend:true,feat:false,tags:["Rust","Go","ব্যাকএন্ড"],days:0},
+  {id:16,slug:"bangladesh-5g-rollout",title:"বাংলাদেশে 5G: কবে আসছে আর কী বদলাবে?",excerpt:"5G শুধু দ্রুত ইন্টারনেট নয় — IoT, স্মার্ট সিটি আর রিমোট সার্জারির দরজা খুলে দেবে এই প্রযুক্তি।",content:"বাংলাদেশে 5G নিয়ে আলোচনা তুঙ্গে।\n\n## 5G-তে কী কী সম্ভব\n\n- ১ Gbps+ ডাউনলোড স্পিড\n- ১ মিলিসেকেন্ডের কম লেটেন্সি\n- প্রতি বর্গকিলোমিটারে ১০ লক্ষ ডিভাইস সংযোগ\n\n## বাংলাদেশের চ্যালেঞ্জ\n\n- স্পেকট্রাম বরাদ্দের জটিলতা\n- টাওয়ার ইনফ্রাস্ট্রাকচার ঘাটতি\n- ডিভাইসের দাম এখনো বেশি\n\n> 5G আসবে, কিন্তু সবার হাতে পৌঁছাতে সময় লাগবে।\n\n## সম্ভাব্য সময়সীমা\n\nবিশেষজ্ঞরা বলছেন ২০২৭ সালের মধ্যে ঢাকা ও চট্টগ্রামে সীমিত পরিসরে 5G চালু হতে পারে।",img:IM("18545013"),cat:"gadgets",author:"সাদিয়া রহমান",mins:6,views:12800,trend:true,feat:false,tags:["5G","মোবাইল","বাংলাদেশ"],days:0},
+  {id:17,slug:"linux-kernel-bangla-guide",title:"লিনাক্স কার্নেল বাংলায়: অপারেটিং সিস্টেমের হৃদপিণ্ড যেভাবে কাজ করে",excerpt:"কার্নেল কী, প্রসেস শিডিউলিং কীভাবে হয়, মেমোরি ম্যানেজমেন্ট কী — সব একসাথে সহজ বাংলায়।",content:"লিনাক্স কার্নেল হলো অপারেটিং সিস্টেমের মূল অংশ যেটা হার্ডওয়্যার আর সফটওয়্যারের মধ্যে সেতু হিসেবে কাজ করে।\n\n## কার্নেলের প্রধান কাজ\n\n- প্রসেস ম্যানেজমেন্ট: কোন প্রোগ্রাম কখন CPU পাবে\n- মেমোরি ম্যানেজমেন্ট: RAM ভাগাভাগি ও ভার্চুয়াল মেমোরি\n- ডিভাইস ড্রাইভার: হার্ডওয়্যারের সাথে যোগাযোগ\n- ফাইল সিস্টেম: ডেটা সংরক্ষণ ও পুনরুদ্ধার\n\n## কেন শেখা দরকার\n\n> যারা সিস্টেম প্রোগ্রামিং, DevOps বা এমবেডেড সিস্টেমে কাজ করতে চান, কার্নেলের ধারণা তাদের জন্য অপরিহার্য।\n\n## শুরু করবেন কীভাবে\n\n- প্রথমে বেসিক C প্রোগ্রামিং শিখুন\n- /proc ফাইল সিস্টেম ঘেঁটে দেখুন\n- একটি সাধারণ কার্নেল মডিউল লিখে দেখুন",img:IM("693859"),cat:"programming",author:"রাফিদ আহমেদ",mins:10,views:7320,trend:false,feat:false,tags:["লিনাক্স","কার্নেল","সিস্টেম"],days:0},
+  {id:18,slug:"ai-in-healthcare-bangladesh",title:"স্বাস্থ্যসেবায় AI: বাংলাদেশের হাসপাতালে কৃত্রিম বুদ্ধিমত্তা কতদূর?",excerpt:"রোগ নির্ণয়ে AI মডেল, টেলিমেডিসিনে চ্যাটবট, ড্রাগ ডিসকভারি — বাংলাদেশের স্বাস্থ্য খাতে AI বিপ্লবের হালচাল।",content:"কৃত্রিম বুদ্ধিমত্তা বিশ্বজুড়ে স্বাস্থ্যসেবায় বিপ্লব ঘটাচ্ছে, বাংলাদেশও পিছিয়ে নেই।\n\n## কোথায় ব্যবহার হচ্ছে\n\n- চেস্ট এক্স-রে থেকে যক্ষ্মা শনাক্তকরণ\n- ডায়াবেটিক রেটিনোপ্যাথি স্ক্রিনিং\n- টেলিমেডিসিন প্ল্যাটফর্মে AI ট্রায়াজ\n\n## সাফল্যের গল্প\n\n> একটি দেশীয় স্টার্টআপ ইতোমধ্যে ৫০,০০০+ এক্স-রে বিশ্লেষণ করেছে AI দিয়ে, নির্ভুলতা ৯৪% এর বেশি।\n\n## বাধা কোথায়\n\n- প্রশিক্ষিত ডেটার অভাব\n- রেগুলেটরি ফ্রেমওয়ার্ক নেই\n- চিকিৎসকদের মধ্যে সংশয়\n\n## ভবিষ্যৎ\n\nসরকার ও বেসরকারি উদ্যোগ মিলে কাজ করলে আগামী ৫ বছরে প্রাথমিক স্বাস্থ্যসেবায় AI ব্যাপকভাবে ব্যবহৃত হতে পারে।",img:IM("30547574"),cat:"ai",author:"তানভীর হাসান",mins:9,views:11560,trend:true,feat:false,tags:["AI","স্বাস্থ্যসেবা","বাংলাদেশ"],days:0},
+  {id:19,slug:"ev-revolution-bangladesh-2026",title:"ইলেকট্রিক গাড়ির বিপ্লব: বাংলাদেশে EV চার্জিং ইনফ্রাস্ট্রাকচার কতটা প্রস্তুত?",excerpt:"জ্বালানি খরচ কমানো থেকে পরিবেশ রক্ষা — ইলেকট্রিক গাড়ি বাংলাদেশের সড়কে আসতে কী কী বাধা পেরোতে হবে?",content:"বিশ্বজুড়ে ইলেকট্রিক ভেহিকেল (EV) বিপ্লব চলছে। বাংলাদেশেও এই ঢেউ আসতে শুরু করেছে, তবে পথ এখনো বন্ধুর।\n\n## বর্তমান চিত্র\n\n- ঢাকায় ইজি বাইক ও অটো রিকশায় ইলেকট্রিক মোটর ব্যাপকভাবে ব্যবহৃত\n- টেসলা, BYD-এর গাড়ি আমদানি শুরু হয়েছে সীমিত পরিসরে\n- সরকার EV আমদানিতে শুল্ক ছাড় দিয়েছে\n\n## চার্জিং ইনফ্রাস্ট্রাকচার\n\nএটাই সবচেয়ে বড় চ্যালেঞ্জ। পুরো দেশে পাবলিক চার্জিং স্টেশন হাতে গোনা।\n\n- ঢাকায় মাত্র ১২-১৫টি ফাস্ট চার্জিং পয়েন্ট\n- চট্টগ্রাম ও সিলেটে প্রায় শূন্য\n- অ্যাপার্টমেন্ট বিল্ডিংয়ে হোম চার্জিং সেটআপ করা কঠিন\n\n> চার্জিং পয়েন্ট ছাড়া EV বিক্রি বাড়ানো অসম্ভব, আবার চাহিদা ছাড়া কেউ চার্জিং পয়েন্ট বসাতে চায় না — এটাই চিকেন-অ্যান্ড-এগ সমস্যা।\n\n## ব্যাটারি প্রযুক্তি\n\nসলিড-স্টেট ব্যাটারি আসলে চার্জিং সময় ১০ মিনিটে নামতে পারে এবং রেঞ্জ ৮০০ কিলোমিটার ছাড়াবে।\n\n## ভবিষ্যৎ পরিকল্পনা\n\n- জাতীয় মহাসড়কে প্রতি ৫০ কিমিতে চার্জিং স্টেশন স্থাপনের পরিকল্পনা\n- সোলার-পাওয়ার্ড চার্জিং হাব\n- ব্যাটারি সোয়াপিং মডেল থ্রি-হুইলারের জন্য\n\nবাংলাদেশের EV ভবিষ্যৎ উজ্জ্বল, তবে সেটা বাস্তবায়নে সরকার, বেসরকারি খাত ও ভোক্তা — তিন পক্ষকেই একসাথে এগোতে হবে।",img:IM("35736778"),cat:"science",author:"ড. মেহজাবিন আলম",mins:8,views:9870,trend:true,feat:false,tags:["EV","ইলেকট্রিক গাড়ি","চার্জিং"],days:0},
+  {id:20,slug:"web3-blockchain-bangla-explained",title:"Web3 ও ব্লকচেইন সহজ বাংলায়: হাইপের আড়ালে আসল প্রযুক্তি কী?",excerpt:"ক্রিপ্টোকারেন্সি, NFT, DAO — শব্দগুলো শুনেছেন অনেক, কিন্তু ব্লকচেইন আসলে কী সমস্যার সমাধান করে?",content:"Web3 নিয়ে হাইপ অনেক, কিন্তু মূল প্রযুক্তি বোঝার চেষ্টা কম। আজ সেই চেষ্টাটাই করব।\n\n## ব্লকচেইন কী — এক লাইনে\n\nএমন একটা ডিজিটাল খাতা যেখানে একবার লেখা হলে কেউ মুছতে বা বদলাতে পারে না, আর সবাই সেটা দেখতে পায়।\n\n## কোথায় সত্যিই কাজে লাগছে\n\n- সাপ্লাই চেইনে পণ্যের উৎস ট্র্যাকিং\n- আন্তর্জাতিক রেমিট্যান্সে মধ্যস্থতাকারী বাদ দেওয়া\n- ডিজিটাল পরিচয় ব্যবস্থাপনা\n- জমির রেকর্ড ও সরকারি নথি যাচাই\n\n## কোথায় হাইপ বেশি\n\n> NFT-তে লাখ লাখ টাকার ছবি বিক্রি হওয়ার গল্প শুনে অনেকে মনে করেন ব্লকচেইন মানেই দ্রুত টাকা। বাস্তবতা ভিন্ন।\n\n- বেশিরভাগ NFT প্রজেক্ট ব্যর্থ হয়েছে\n- ক্রিপ্টো মার্কেট অত্যন্ত অস্থির\n- অনেক Web3 প্রজেক্ট আসলে Web2 দিয়েই করা সম্ভব\n\n## বাংলাদেশে অবস্থা\n\nবাংলাদেশ ব্যাংক ক্রিপ্টোকারেন্সি নিষিদ্ধ রেখেছে, তবে ব্লকচেইন প্রযুক্তি গবেষণা উৎসাহিত করছে। কিছু স্টার্টআপ রেমিট্যান্স ও কৃষি সাপ্লাই চেইনে ব্লকচেইন পাইলট চালাচ্ছে।\n\n## শেখা শুরু করবেন কীভাবে\n\n- প্রথমে হ্যাশিং ও পাবলিক-কি ক্রিপ্টোগ্রাফি বুঝুন\n- Ethereum এর ডকুমেন্টেশন পড়ুন\n- একটি সিম্পল স্মার্ট কন্ট্রাক্ট লিখে দেখুন Solidity-তে",img:IM("7267598"),cat:"programming",author:"রাফিদ আহমেদ",mins:10,views:7650,trend:false,feat:false,tags:["ব্লকচেইন","Web3","ক্রিপ্টো"],days:0},
+  {id:21,slug:"deepfake-detection-bangla",title:"ডিপফেক শনাক্তকরণ: AI-তৈরি ভুয়া ভিডিও চেনার ৫টি উপায়",excerpt:"নির্বাচন থেকে সাইবার বুলিং — ডিপফেক এখন বাস্তব হুমকি। কীভাবে আসল থেকে নকল আলাদা করবেন?",content:"AI দিয়ে মুখ বদলে দেওয়া ভিডিও তৈরি এখন এতটাই সহজ যে সাধারণ মানুষও ফোনে ডিপফেক বানাতে পারে। এটা মজার হলেও, অপব্যবহারের ঝুঁকি ভয়ঙ্কর।\n\n## ডিপফেক কীভাবে কাজ করে\n\nGAN (Generative Adversarial Network) বা ডিফিউশন মডেল ব্যবহার করে একজনের মুখ আরেকজনের ভিডিওতে বসিয়ে দেওয়া হয়।\n\n## চেনার ৫টি উপায়\n\n- চোখের পলক অস্বাভাবিক — ডিপফেকে পলক কম পড়ে\n- ঠোঁটের নড়াচড়া ও অডিও সিঙ্কে গড়বড় থাকে\n- মুখের প্রান্তে ব্লার বা ঝাপসা দেখা যায়\n- কানের আকৃতি বা দাঁতের বিন্যাস অসামঞ্জস্যপূর্ণ\n- আলো ও ছায়ার দিক মেলে না\n\n> সবচেয়ে ভালো প্রতিরক্ষা হলো সচেতনতা। কোনো ভিডিও অবিশ্বাস্য মনে হলে, সম্ভবত সেটা অবিশ্বাস্যই।\n\n## প্রযুক্তিগত সমাধান\n\n- Microsoft Video Authenticator\n- Intel FakeCatcher (রক্ত প্রবাহের প্যাটার্ন বিশ্লেষণ)\n- ওয়াটারমার্কিং ও কনটেন্ট প্রভেন্যান্স স্ট্যান্ডার্ড (C2PA)\n\n## আইনি দিক\n\nবাংলাদেশে ডিপফেক নির্দিষ্টভাবে আইনে উল্লেখ নেই, তবে ডিজিটাল নিরাপত্তা আইনের আওতায় মামলা হতে পারে।",img:IM("30547577"),cat:"cyber-security",author:"নুসরাত জাহান",mins:7,views:13240,trend:true,feat:false,tags:["ডিপফেক","AI","নিরাপত্তা"],days:0},
+  {id:22,slug:"bangla-freelancing-2026",title:"বাংলাদেশের ফ্রিল্যান্সিং ২০২৬: AI যুগে কোন দক্ষতায় কাজ পাবেন?",excerpt:"গ্রাফিক ডিজাইন আর ডেটা এন্ট্রির দিন ফুরিয়ে আসছে। AI যুগে টিকে থাকতে কোন দক্ষতা শিখবেন?",content:"বাংলাদেশ ফ্রিল্যান্সিংয়ে বিশ্বে দ্বিতীয়। কিন্তু AI-এর কারণে কাজের ধরন দ্রুত বদলে যাচ্ছে।\n\n## যেসব কাজ কমবে\n\n- সাধারণ গ্রাফিক ডিজাইন (AI ক্যানভা দিয়ে হচ্ছে)\n- বেসিক ওয়েব ডেভেলপমেন্ট (no-code টুলে)\n- কনটেন্ট রাইটিং (AI দিয়ে ড্রাফট হচ্ছে)\n- ম্যানুয়াল ডেটা এন্ট্রি\n\n## যেসব কাজ বাড়বে\n\n- AI প্রম্পট ইঞ্জিনিয়ারিং ও ফাইন-টিউনিং\n- সাইবার সিকিউরিটি অডিট\n- ভিডিও এডিটিং ও মোশন গ্রাফিক্স (AI-enhanced)\n- UX রিসার্চ ও প্রোডাক্ট ডিজাইন\n- ক্লাউড ইনফ্রাস্ট্রাকচার ও DevOps\n\n> AI টুল শেখা মানে চাকরি হারানো নয়, AI দিয়ে দ্বিগুণ কাজ করার ক্ষমতা অর্জন।\n\n## কৌশল\n\n- T-shaped দক্ষতা গড়ুন — একটি বিষয়ে গভীর, বাকিতে ব্রড\n- পোর্টফোলিওতে AI টুল ব্যবহারের প্রমাণ রাখুন\n- ক্লায়েন্টকে ফলাফল বেচুন, ঘণ্টা নয়",img:IM("28494632"),cat:"startup",author:"ইমরান কবির",mins:7,views:16890,trend:true,feat:false,tags:["ফ্রিল্যান্সিং","AI","ক্যারিয়ার"],days:0},
+  {id:23,slug:"apple-vision-pro-review-bangla",title:"Apple Vision Pro রিভিউ: স্থানিক কম্পিউটিং কি সত্যিই ভবিষ্যৎ?",excerpt:"চোখের ট্র্যাকিং, হ্যান্ড জেসচার আর মিক্সড রিয়েলিটি — Apple-এর সবচেয়ে উচ্চাভিলাষী প্রোডাক্ট কেমন?",content:"Apple Vision Pro নিয়ে প্রচুর হাইপ ছিল। দুই সপ্তাহ ব্যবহারের পর বলতে পারি — এটা ভবিষ্যতের একটা ঝলক, কিন্তু বর্তমানের প্রোডাক্ট হিসেবে সীমাবদ্ধতা আছে।\n\n## যা ভালো লেগেছে\n\n- ডিসপ্লে কোয়ালিটি অবিশ্বাস্য — প্রতিটি পিক্সেল স্পষ্ট\n- আই ট্র্যাকিং + হ্যান্ড জেসচার কম্বিনেশন অসাধারণ স্বাভাবিক\n- স্থানিক ভিডিও (Spatial Video) আবেগের অন্য মাত্রা\n- ম্যাক ভার্চুয়াল ডিসপ্লে হিসেবে দারুণ কাজ করে\n\n## যেখানে হোঁচট খেয়েছে\n\n- ওজন — ২ ঘণ্টার বেশি পরলে ক্লান্ত লাগে\n- ব্যাটারি মাত্র ২ ঘণ্টার\n- অ্যাপ ইকোসিস্টেম এখনো দুর্বল\n- দাম বাংলাদেশের বাজারে অবাস্তব\n\n> Vision Pro একটি ডেভেলপার কিট যেটা ভুলবশত কনজিউমারদের কাছে বিক্রি হচ্ছে।\n\n## বাংলাদেশের জন্য প্রাসঙ্গিকতা\n\nসরাসরি ব্যবহারে এখনো প্রাসঙ্গিক নয়। তবে AR/VR ডেভেলপমেন্ট দক্ষতা শিখলে আন্তর্জাতিক বাজারে বড় সুযোগ আছে।\n\n## ভবিষ্যৎ প্রজন্ম\n\nদ্বিতীয় প্রজন্মে ওজন কমবে, দাম নামবে, এবং আরও অ্যাপ আসবে। তখনই এটা মূলধারায় আসতে পারে।",img:IM("6727761"),cat:"gadgets",author:"সাদিয়া রহমান",mins:9,views:14320,trend:true,feat:false,tags:["Apple","Vision Pro","AR/VR"],days:0},
+  {id:24,slug:"python-vs-javascript-beginners-2026",title:"প্রোগ্রামিং শুরু করবেন? Python নাকি JavaScript — কোনটা আগে শিখবেন?",excerpt:"নতুনদের চিরন্তন প্রশ্ন: প্রথম প্রোগ্রামিং ভাষা কোনটা হওয়া উচিত? দুটোর সুবিধা-অসুবিধা তুলনা করে সিদ্ধান্ত নিন।",content:"প্রোগ্রামিং শেখার প্রথম ধাপেই সবচেয়ে বড় দ্বিধা — কোন ভাষা দিয়ে শুরু করব?\n\n## Python-এর পক্ষে\n\n- সিনট্যাক্স সহজ, প্রায় ইংরেজি পড়ার মতো\n- ডেটা সায়েন্স, AI, মেশিন লার্নিংয়ে রাজা\n- অটোমেশন স্ক্রিপ্ট লেখা খুব সহজ\n- বিশাল লাইব্রেরি ইকোসিস্টেম\n\n## JavaScript-এর পক্ষে\n\n- ব্রাউজারে সরাসরি চলে — ফলাফল তাৎক্ষণিক দেখা যায়\n- ফ্রন্টএন্ড + ব্যাকএন্ড (Node.js) দুটোতেই কাজ করে\n- ওয়েব ডেভেলপমেন্টে অপরিহার্য\n- চাকরির বাজারে চাহিদা সবচেয়ে বেশি\n\n## আমার পরামর্শ\n\n> ভাষা নিয়ে ভাবতে ভাবতে সময় নষ্ট করবেন না। যেকোনো একটা বেছে নিয়ে শুরু করুন। প্রোগ্রামিং-এর মূল ধারণা (লুপ, কন্ডিশন, ফাংশন) সব ভাষায় একই।\n\n## কে কোনটা শিখবেন\n\n- ওয়েবসাইট বা অ্যাপ বানাতে চান → JavaScript\n- ডেটা বিশ্লেষণ বা AI শিখতে চান → Python\n- দুটোই শিখতে চান → Python দিয়ে শুরু, ৩ মাস পর JavaScript\n\n## ভুল যেটা করবেন না\n\nএকসাথে ৫টা ভাষা শিখতে যাওয়া। একটায় দক্ষ হোন, বাকিগুলো এমনিতেই সহজ লাগবে।",img:IM("34804018"),cat:"programming",author:"অর্পিতা সেন",mins:6,views:21340,trend:true,feat:false,tags:["Python","JavaScript","প্রোগ্রামিং শেখা"],days:0}
+];
+const now=Date.now();P.forEach(p=>{p.publishedAt=new Date(now-p.days*864e5).toISOString()});
+const FEAT=P.find(p=>p.feat)||P[0];
+const TREND=P.filter(p=>p.trend).sort((a,b)=>b.views-a.views).slice(0,5);
+
+/* ══════════════ ROUTER ══════════════ */
+const R=window.R={
+  go(hash){location.hash="#/"+hash;},
+  route(){
+    const h=(location.hash||"#/").slice(2);
+    window.scrollTo({top:0,behavior:"instant"});
+    if(!h||h==="/") return renderHome();
+    if(h.startsWith("article/")) return renderArticle(h.slice(8));
+    if(h.startsWith("category/")) return renderCategory(h.slice(9));
+    if(h==="about") return renderAbout();
+    if(h.startsWith("search/")) return renderSearch(decodeURIComponent(h.slice(7)));
+    renderHome();
+  }
+};
+window.addEventListener("hashchange",()=>R.route());
+
+/* ══════════════ NAV ══════════════ */
+const NAV=[{l:"হোম",h:""},{l:"সব লেখা",h:""},{l:"আমাদের কথা",h:"about"}];
+function buildNav(){
+  const links=NAV.map(n=>`<a onclick="R.go('${n.h}')">${n.l}</a>`).join("");
+  $("#nav-links").innerHTML=links;
+  const mobileLinks=NAV.map(n=>`<a onclick="R.go('${n.h}');closeMobile()">${n.l}</a>`).join("")
+    + CATS.map(c=>`<a onclick="R.go('category/${c.slug}');closeMobile()">${c.nameBn}</a>`).join("");
+  $("#mobile-nav").innerHTML=mobileLinks;
+  $("#footer-nav").innerHTML=NAV.map(n=>`<li><a onclick="R.go('${n.h}')"><span class="bullet"></span>${n.l}</a></li>`).join("");
+  $("#footer-cats").innerHTML=CATS.map(c=>`<li><a onclick="R.go('category/${c.slug}')"><span class="bullet"></span>${c.nameBn}</a></li>`).join("");
+  $("#f-year").textContent=bn(new Date().getFullYear());
+}
+function closeMobile(){$("#mobile-menu").classList.remove("open");$("#menu-open-icon").style.display="";$("#menu-close-icon").style.display="none";}
+window.subscribeNL=function(form,event){
+  event.preventDefault();
+  const input=form.querySelector('input');
+  const msg=form.parentElement.querySelector('.nl-msg-out');
+  if(!input.value.trim())return;
+  msg.innerHTML='<div class="nl-msg">'+IC.check+'সাবস্ক্রিপশন সফল! ইনবক্সে চোখ রাখুন।</div>';
+  input.value='';
+  setTimeout(()=>{msg.innerHTML='';},4500);
+};
+$("#mobile-toggle").addEventListener("click",()=>{const o=$("#mobile-menu").classList.toggle("open");$("#menu-open-icon").style.display=o?"none":"";$("#menu-close-icon").style.display=o?"":"none";});
+window.addEventListener("scroll",()=>{const nb=$("#navbar");nb.classList.toggle("scrolled",scrollY>24);const bt=$("#back-to-top");bt.classList.toggle("visible",scrollY>500);},{passive:true});
+$("#back-to-top").addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
+function setupSearch(){
+  const go=v=>{const q=v.trim();if(q)R.go("search/"+encodeURIComponent(q));};
+  $("#search-input").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();go(e.target.value);}});
+  $("#m-search-input").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();go(e.target.value);closeMobile();}});
+}
+
+/* ══════════════ SHARED RENDERERS ══════════════ */
+function postCard(p,i){
+  const c=CATS.find(x=>x.slug===p.cat);
+  return `<div class="post-card glass shimmer-wrap" style="animation:fadeInUp .5s ${Math.min(i,8)*.06}s ease-out both" onclick="R.go('article/${p.slug}')">
+    <div class="card-img"><img src="${p.img}" alt="${p.title}" loading="lazy"/><div class="img-overlay"></div>
+      <span class="cat-badge" onclick="event.stopPropagation();R.go('category/${p.cat}')">${c?.nameBn||""}</span>
+      ${p.trend?`<span class="trending-tag">${IC.zap}ট্রেন্ডিং</span>`:""}
+    </div>
+    <div class="card-body">
+      <h3 class="line-clamp-2">${p.title}</h3>
+      <p class="excerpt line-clamp-2">${p.excerpt}</p>
+      <div class="card-tags">${p.tags.slice(0,3).map(t=>`<span onclick="event.stopPropagation();R.go('search/${encodeURIComponent(t)}')">#${t}</span>`).join("")}</div>
+      <div class="card-footer">
+        <div class="left"><span class="avatar">${p.author.charAt(0)}</span><span>${p.author}</span></div>
+        <div class="right"><span>${IC.clock}${bn(p.mins)}মি</span><span>${IC.eye}${fv(p.views)}</span></div>
+      </div>
+      <div class="read-more">${rt(p.publishedAt)} ${IC.arrowUp}</div>
+    </div>
+  </div>`;
+}
+
+function sidebarHTML(activeCat){
+  return `<div class="sidebar-section glass">
+    <div class="sec-title"><div class="sec-icon" style="background:rgba(255,77,157,.15)">${IC.flame}</div><h3>টপ ট্রেন্ডিং</h3></div>
+    <div class="trending-list">${TREND.map((p,i)=>`<div class="trending-item" onclick="R.go('article/${p.slug}')"><span class="rank text-gradient">${bn(i+1)}</span><div class="t-info"><div class="t-title line-clamp-2">${p.title}</div><div class="t-meta">${IC.eye}${fv(p.views)} • ${CATS.find(c=>c.slug===p.cat)?.nameBn||""}</div></div></div>`).join("")}</div>
+  </div>
+  <div class="sidebar-section glass">
+    <div class="sec-title"><div class="sec-icon" style="background:rgba(0,243,255,.12)">${IC.trend}</div><h3>ক্যাটাগরি</h3></div>
+    <div class="cat-filter-grid">${CATS.map(c=>`<button class="cat-btn${activeCat===c.slug?" active":""}" onclick="R.go('category/${c.slug}')"><span class="cf-left"><span class="cf-icon" style="background:linear-gradient(135deg,${c.from}33,${c.to}44);color:${c.from}">${ci(c.icon)}</span><span class="cf-name">${c.nameBn}</span></span><span class="cf-count">${bn(c.count)}</span></button>`).join("")}</div>
+  </div>
+  <div class="sidebar-section glass" style="position:relative;overflow:hidden">
+    <div class="newsletter-glow"></div>
+    <div style="position:relative">
+      <div class="sec-title"><div class="sec-icon" style="background:rgba(123,44,191,.2)">${IC.mail}</div><h3>নিউজলেটার</h3></div>
+      <p style="font-size:.88rem;color:rgba(255,255,255,.55)">সপ্তাহে একবার, সেরা প্রযুক্তি বিশ্লেষণ সরাসরি ইনবক্সে।</p>
+      <form class="nl-form" onsubmit="subscribeNL(this,event)">
+        <input type="email" required placeholder="আপনার ইমেইল"/>
+        <button type="submit">${IC.send} সাবস্ক্রাইব করুন</button>
+      </form>
+      <div class="nl-msg-out"></div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════ HOME PAGE ══════════════ */
+function renderHome(){
+  document.title="প্রযুক্তির দর্পণ | বাংলায় প্রযুক্তির ভবিষ্যৎ";
+  const totalViews=P.reduce((s,p)=>s+p.views,0);
+  const fc=CATS.find(c=>c.slug===FEAT.cat);
+  const marqueeItems=TREND.map(p=>`<a onclick="R.go('article/${p.slug}')"><span style="color:rgba(0,243,255,.7);margin-right:8px">◆</span>${p.title}</a>`).join("");
+
+  let html=`<section class="hero"><div class="hero-inner">
+    <div class="hero-badge anim-page-in"><span class="dot"><span></span><span></span></span>বাংলায় প্রযুক্তির সবচেয়ে নির্ভরযোগ্য বিশ্লেষণ</div>
+    <h1 class="anim-page-in" style="animation-delay:.1s">ভবিষ্যতের প্রযুক্তি,<br/><span class="text-gradient neon-glow">আজকের দর্পণে</span></h1>
+    <p class="sub anim-page-in" style="animation-delay:.2s">কৃত্রিম বুদ্ধিমত্তা, গ্যাজেট, প্রোগ্রামিং আর সাইবার নিরাপত্তা — প্রযুক্তির দর্পণে দেখুন আগামী দিনের প্রতিচ্ছবি।</p>
+    <div class="hero-cta anim-page-in" style="animation-delay:.25s">
+      <a class="btn-primary" onclick="document.getElementById('feed-section').scrollIntoView({behavior:'smooth'})">${IC.zap} সর্বশেষ প্রবন্ধ ${IC.arrow}</a>
+      <a class="btn-secondary" onclick="R.go('about')">আমাদের কথা</a>
+    </div>
+    <div class="hero-stats anim-page-in" style="animation-delay:.3s">
+      ${[{l:"প্রকাশিত লেখা",v:bn(P.length)},{l:"মোট পাঠ",v:fv(totalViews)},{l:"বিভাগ",v:bn(CATS.length)}].map(s=>`<div class="stat-card glass"><dt>${s.l}</dt><dd class="text-gradient">${s.v}</dd></div>`).join("")}
+    </div>
+    <div class="featured-wrap anim-float anim-page-in" style="animation-delay:.35s">
+      <div class="featured-glow anim-spin-slow"></div>
+      <div class="featured-card glass shimmer-wrap" onclick="R.go('article/${FEAT.slug}')">
+        <div class="featured-img"><img src="${FEAT.img}" alt="${FEAT.title}"/><div class="overlay"></div><span class="badge">⚡ ফিচার্ড</span></div>
+        <div class="featured-body">
+          <span class="cat" onclick="event.stopPropagation();R.go('category/${FEAT.cat}')">${fc?.nameBn||""}</span>
+          <h2>${FEAT.title}</h2>
+          <p class="desc line-clamp-2">${FEAT.excerpt}</p>
+          <div class="meta-row"><span>${IC.eye}${fv(FEAT.views)} ভিউ</span><span>${IC.clock}${bn(FEAT.mins)} মিনিট</span><span>${fd(FEAT.publishedAt)}</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="trending-bar glass anim-page-in" style="animation-delay:.4s;margin-top:40px">
+      <span class="trending-badge">${IC.zap}ট্রেন্ডিং</span>
+      <div class="marquee-wrap"><div class="marquee-track anim-marquee">${marqueeItems}${marqueeItems}</div></div>
+    </div>
+  </div></section>
+
+  <div class="content-grid" id="feed-section">
+    <section>
+      <div class="feed-header"><div class="feed-title-wrap"><div class="icon-wrap">${IC.grid}</div><div><h2>সাম্প্রতিক লেখা</h2></div></div>
+        <div class="sort-pills glass" id="sort-pills"><button class="sort-pill active" data-s="latest">সর্বশেষ</button><button class="sort-pill" data-s="popular">জনপ্রিয়</button><button class="sort-pill" data-s="trending">ট্রেন্ডিং</button></div>
+      </div>
+      <div class="filter-chips" id="chips"></div>
+      <div class="post-grid" id="pgrid"></div>
+      <div class="load-more-wrap" id="lm" style="display:none"><button class="btn-load-more glass" id="lm-btn"><span class="dot"></span> আরও লেখা দেখুন</button></div>
+    </section>
+    <aside class="sidebar">${sidebarHTML("")}</aside>
+  </div>`;
+
+  $("#app").innerHTML=html;
+  homeInteractions();
+}
+
+function homeInteractions(){
+  let sort="latest",cat="all",limit=6;
+  const filtered=()=>{
+    let list=[...P];
+    if(cat!=="all") list=list.filter(p=>p.cat===cat);
+    if(sort==="popular") list.sort((a,b)=>b.views-a.views);
+    else if(sort==="trending") list.sort((a,b)=>(b.trend?1:0)-(a.trend?1:0)||b.views-a.views);
+    else list.sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
+    return list;
+  };
+  const render=()=>{
+    const list=filtered(),vis=list.slice(0,limit);
+    const g=document.getElementById("pgrid");
+    g.innerHTML=vis.length?vis.map((p,i)=>postCard(p,i)).join(""):`<div class="empty-state glass">${IC.search}<h3>কোনো লেখা পাওয়া যায়নি</h3></div>`;
+    document.getElementById("lm").style.display=list.length>limit?"block":"none";
+  };
+  const chips=()=>{
+    const el=document.getElementById("chips");
+    el.innerHTML=`<button class="chip${cat==="all"?" active":""}" onclick="this.hCat('all')">সবগুলো</button>`+CATS.map(c=>`<button class="chip${cat===c.slug?" active":""}" onclick="this.hCat('${c.slug}')">${c.nameBn} (${bn(c.count)})</button>`).join("");
+    el.querySelectorAll(".chip").forEach(b=>{b.hCat=s=>{cat=s;limit=6;chips();render();};});
+  };
+  chips();render();
+
+  document.getElementById("sort-pills")?.addEventListener("click",e=>{
+    const b=e.target.closest(".sort-pill");if(!b)return;
+    document.querySelectorAll(".sort-pill").forEach(p=>p.classList.remove("active"));
+    b.classList.add("active");sort=b.dataset.s;limit=6;render();
+  });
+  document.getElementById("lm-btn")?.addEventListener("click",()=>{limit+=6;render();});
+}
+
+/* ══════════════ ARTICLE PAGE ══════════════ */
+function renderArticle(slug){
+  const p=P.find(x=>x.slug===slug);
+  if(!p) return renderHome();
+  const c=CATS.find(x=>x.slug===p.cat);
+  document.title=p.title+" | প্রযুক্তির দর্পণ";
+
+  const body=p.content.split("\n").map(l=>{
+    l=l.trim();if(!l)return"";
+    if(l.startsWith("## "))return`<h2>${l.slice(3)}</h2>`;
+    if(l.startsWith("- "))return`<li>${l.slice(2)}</li>`;
+    if(l.startsWith("> "))return`<blockquote class="glass">${l.slice(2)}</blockquote>`;
+    return`<p>${l}</p>`;
+  }).join("").replace(/(<li>.*?<\/li>)+/g,m=>`<ul>${m}</ul>`);
+
+  const related=P.filter(x=>x.cat===p.cat&&x.slug!==slug).slice(0,3);
+
+  $("#app").innerHTML=`<div class="article-page anim-page-in">
+    <a class="back-link" onclick="history.back()">${IC.back} পেছনে যান</a>
+    <span class="cat" onclick="R.go('category/${p.cat}')">${c?.nameBn||""}</span>
+    <h1>${p.title}</h1>
+    <div class="a-meta"><span>লেখক: ${p.author}</span><span>${IC.eye}${fv(p.views)} ভিউ</span><span>${IC.clock}${bn(p.mins)} মিনিট পড়া</span><span>${fd(p.publishedAt)}</span></div>
+    <div class="cover glass"><img src="${p.img}" alt="${p.title}"/><div class="overlay"></div></div>
+    <div class="article-body glass">${body}</div>
+    <div class="article-tags">${p.tags.map(t=>`<span onclick="R.go('search/${encodeURIComponent(t)}')">#${t}</span>`).join("")}</div>
+    ${related.length?`<div class="related-section"><h2>সম্পর্কিত <span class="text-gradient">লেখা</span></h2><div class="related-grid">${related.map((r,i)=>postCard(r,i)).join("")}</div></div>`:""}
+  </div>`;
+}
+
+/* ══════════════ CATEGORY PAGE ══════════════ */
+function renderCategory(slug){
+  const c=CATS.find(x=>x.slug===slug);
+  if(!c) return renderHome();
+  document.title=c.nameBn+" | প্রযুক্তির দর্পণ";
+  const list=P.filter(p=>p.cat===slug).sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
+
+  $("#app").innerHTML=`<div class="cat-page anim-page-in">
+    <a class="back-link" onclick="R.go('')">${IC.back} হোমে ফিরুন</a>
+    <div class="cat-page-header glass">
+      <div class="glow1" style="background:${c.to}55"></div>
+      <div class="glow2" style="background:${c.from}33"></div>
+      <h1><span class="text-gradient neon-glow">${c.nameBn}</span></h1>
+      <p>এই বিভাগে মোট ${bn(list.length)} টি লেখা প্রকাশিত হয়েছে।</p>
+    </div>
+    <div class="content-grid">
+      <div class="post-grid">${list.length?list.map((p,i)=>postCard(p,i)).join(""):`<div class="empty-state glass">${IC.search}<h3>এই বিভাগে এখনো কোনো লেখা নেই</h3></div>`}</div>
+      <aside class="sidebar">${sidebarHTML(slug)}</aside>
+    </div>
+  </div>`;
+}
+
+/* ══════════════ SEARCH PAGE ══════════════ */
+function renderSearch(q){
+  document.title=`"${q}" — সার্চ | প্রযুক্তির দর্পণ`;
+  const ql=q.toLowerCase();
+  const list=P.filter(p=>p.title.toLowerCase().includes(ql)||p.excerpt.toLowerCase().includes(ql)||p.tags.some(t=>t.toLowerCase().includes(ql)));
+
+  $("#app").innerHTML=`<div class="cat-page anim-page-in">
+    <a class="back-link" onclick="R.go('')">${IC.back} হোমে ফিরুন</a>
+    <div class="cat-page-header glass">
+      <h1>অনুসন্ধান: <span class="text-gradient">"${q}"</span></h1>
+      <p>${bn(list.length)} টি ফলাফল পাওয়া গেছে।</p>
+    </div>
+    <div class="content-grid">
+      <div class="post-grid">${list.length?list.map((p,i)=>postCard(p,i)).join(""):`<div class="empty-state glass">${IC.search}<h3>কিছু পাওয়া যায়নি</h3><p>অন্য শব্দ দিয়ে চেষ্টা করুন।</p></div>`}</div>
+      <aside class="sidebar">${sidebarHTML("")}</aside>
+    </div>
+  </div>`;
+}
+
+/* ══════════════ ABOUT PAGE ══════════════ */
+function renderAbout(){
+  document.title="আমাদের কথা | প্রযুক্তির দর্পণ";
+  const vals=[
+    {t:"গভীর বিশ্লেষণ",d:"শিরোনামের বাইরে গিয়ে প্রভাব ও বাস্তব প্রয়োগ নিয়ে লিখি।",i:'<path d="M9.5 2a3 3 0 0 0-3 3 3 3 0 0 0-.5 5.7V12a5 5 0 0 0 5 5h2a5 5 0 0 0 5-5v-1.3A3 3 0 0 0 17.5 5a3 3 0 0 0-3-3z" fill="none" stroke="currentColor" stroke-width="2"/>'},
+    {t:"নিরপেক্ষতা",d:"কোনো ব্র্যান্ডের প্রভাব ছাড়াই রিভিউ ও মতামত।",i:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="2"/>'},
+    {t:"সহজ ভাষা",d:"জটিল প্রযুক্তিকে সহজ বাংলায় ব্যাখ্যা করি।",i:'<circle cx="12" cy="8" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 21a8 8 0 0 0-16 0" fill="none" stroke="currentColor" stroke-width="2"/>'}
+  ];
+  const tv=P.reduce((s,p)=>s+p.views,0);
+
+  $("#app").innerHTML=`<div class="about-page anim-page-in">
+    <a class="back-link" onclick="R.go('')">${IC.back} হোমে ফিরুন</a>
+    <div class="glass" style="border-radius:2rem;padding:32px;position:relative;overflow:hidden;margin-bottom:32px">
+      <div style="position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:rgba(0,243,255,.2);filter:blur(80px);pointer-events:none"></div>
+      <h1>আমরা <span class="text-gradient neon-glow">প্রযুক্তির দর্পণ</span></h1>
+      <p>প্রযুক্তির দর্পণ একটি স্বাধীন বাংলা প্রযুক্তি প্রকাশনা। আমাদের লক্ষ্য — বিশ্বজুড়ে প্রযুক্তির যে দ্রুত পরিবর্তন ঘটছে, তার নির্ভরযোগ্য ও বোধগম্য বিশ্লেষণ বাংলা ভাষাভাষী পাঠকের কাছে পৌঁছে দেওয়া।</p>
+      <div class="hero-stats" style="margin-top:24px;max-width:100%">
+        ${[{l:"লেখা",v:bn(P.length)},{l:"মোট পাঠ",v:fv(tv)},{l:"বিভাগ",v:bn(CATS.length)}].map(s=>`<div class="stat-card glass"><dt>${s.l}</dt><dd class="text-gradient">${s.v}</dd></div>`).join("")}
+      </div>
+    </div>
+    <h2>আমাদের মূল্যবোধ</h2>
+    <div class="values-grid">${vals.map(v=>`<div class="value-card glass"><div class="value-icon"><svg viewBox="0 0 24 24">${v.i}</svg></div><h3>${v.t}</h3><p>${v.d}</p></div>`).join("")}</div>
+    <h2>যোগাযোগ</h2>
+    <p>সংবাদ, রিভিউ ইউনিট কিংবা লেখা পাঠাতে চাইলে ইমেইল করুন: <strong style="color:var(--cyan)">hello@projuktirdorpon.com</strong></p>
+    <p>ঠিকানা: ধানমন্ডি, ঢাকা ১২০৯, বাংলাদেশ</p>
+  </div>`;
+}
+
+/* ══════════════ BOOT ══════════════ */
+buildNav();
+setupSearch();
+R.route();
+
+})();
+</script>
+</body>
+</html>
